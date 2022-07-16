@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <style>
+        body {
+            padding: 10px 50px;
+        }
+
+        label,
+        input,
+        span {
+            font-size: 20px;
+        }
+
+        .input {
+            width: 40%;
+            padding: 10px 20px;
+            margin: 10px;
+            border: 2px solid blue;
+            border-radius: 3px;
+            font-size: 25px;
+        }
+
+        span {
+            font-weight: bold;
+            color: red;
+            font-size: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <form name="myForm" action="#" method="" onsubmit="return validate()">
+        <!-- start of a form. after submission the destination page link in written inside 'action' attribute.
+        there are two types of methods mainly.
+        1) get(by default): all the values giver by user are showed in the url.  
+        2) post: all the values giver by user are not showed in the url.   -->
+
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" autocomplete="off" class="input">
+        <span id="nameError" class="errors"></span>
+        <!-- takes text type input -->
+        <!-- 'name' is used to send the value to backend. 'autocomplete=off' is used to stop showing previous values. if user doesn't fill any value then the value inside 'value' attribute comes in action -->
+
+        <br>
+        <br>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" class="input">
+        <span id="emailError" class="errors"></span>
+        <!-- takes email as input -->
+
+        <br>
+        <br>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" class="input">
+        <span id="passwordError" class="errors"></span>
+        <!-- takes password as input -->
+
+        <br>
+        <br>
+
+        <label for="cpassword">Confirm Password</label>
+        <input type="password" id="cpassword" name="cpassword" class="input">
+        <span id="cpasswordError" class="errors"></span>
+        <!-- takes password as input -->
+
+        <br>
+        <br>
+
+        <label for="fav_language">Favorite Language</label>
+        <br>
+        <input type="radio" id="C" name="fav_language" value="C">
+        <label for="C">C</label><br>
+        <input type="radio" id="C++" name="fav_language" value="C++">
+        <label for="C++">C++</label><br>
+        <input type="radio" id="JAVA" name="fav_language" value="JAVA">
+        <label for="JAVA">JAVA</label>
+        <br>
+        <span id="flError" class="errors"></span>
+        <br>
+        <br>
+
+        <!-- submit button -->
+        <input type="submit" value="Submit">
+
+    </form>
+    <!-- end of form -->
+
+    <script>
+        function clearErrors() {
+            var errors = document.getElementsByClassName('errors');
+            for (let item of errors)
+                item.innerHTML = "";
+        }
+
+        function validate() {
+            clearErrors();
+
+            var name = document.getElementById('name').value.trim();
+            if (name.length == 0) {
+                document.getElementById('nameError').innerHTML = "Input your name.";
+                return false;
+            } else if (name.length < 5) {
+                document.getElementById('nameError').innerHTML = "Name length must be five or more.";
+                return false;
+            }
+
+            var password = document.getElementById('password').value;
+            if (password.length == 0) {
+                document.getElementById('passwordError').innerHTML = "Input your password.";
+                return false;
+            } else if (password.length < 8) {
+                document.getElementById('passwordError').innerHTML = "Password length must be eight or more.";
+                return false;
+            } else if (!password.match(/[0-9]/)) {
+                document.getElementById('passwordError').innerHTML = "Password must contain at least one number.";
+                return false;
+            } else if (!password.match(/[a-z]/)) {
+                document.getElementById('passwordError').innerHTML =
+                    "Password must contain at least one lower case letter.";
+                return false;
+            } else if (!password.match(/[A-Z]/)) {
+                document.getElementById('passwordError').innerHTML =
+                    "Password must contain at least one upper case letter.";
+                return false;
+            } else if (!password.match(/[!\@\#\$\%\^\&\*\(\)\-\=\+]/)) {
+                document.getElementById('passwordError').innerHTML =
+                    "Password must contain at least one special character.";
+                return false;
+            }
+
+            var email = document.getElementById('email').value;
+            if (email.length == 0) {
+                document.getElementById('emailError').innerHTML = "Input a valid email.";
+                return false;
+            } else if (!email.match(/[@]/)) {
+                document.getElementById('emailError').innerHTML = "Input a valid email1.";
+                return false;
+            } else if (email.indexOf('@') <= 0) {
+                document.getElementById('emailError').innerHTML = "Input valid email.";
+                return false;
+            }
+
+            var Cpassword = document.getElementById('cpassword').value;
+
+            if (password != Cpassword) {
+                document.getElementById('cpasswordError').innerHTML = "Doesn't match with password.";
+                return false;
+            }
+
+            var fl = document.myForm.fav_language;
+            var check = 0;
+            for (var i = 0; i < fl.length; i++) {
+                if (fl[i].checked == true) {
+                    check = 1;
+                }
+            }
+            if (check == 0) {
+                document.getElementById('flError').innerHTML = "Select an option.";
+                return false;
+            }
+        }
+    </script>
+</body>
+
+</html>
